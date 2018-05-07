@@ -20,16 +20,21 @@ def first_entity_value(entities, entity):
 
 
 def major_papers(major):
-    return major
+    return "major"
 
 
 def handle_message(response):
     entities = response['entities']
     major = first_entity_value(entities, 'major')
+    greetings = first_entity_value(entities, 'greetings')
 
     if major:
         print(major)
         return major_papers(major)
+    elif greetings:
+        return 'Hello, how can I help you?'
+    else:
+        return 'I do not understand you'
 
 
 client = Wit(access_token=access_token)
