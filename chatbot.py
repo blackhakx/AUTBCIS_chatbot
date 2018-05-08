@@ -31,6 +31,8 @@ def major_papers(major):
         return init_reply + major + ':\nhttps://autdev.aut.ac.nz/study/study-options/engineering-computer-and-mathematical-sciences/courses/bachelor-of-computer-and-information-sciences/computational-intelligence-major'
     elif major == 'Network & Security':
         return init_reply + major + ':\nhttps://autdev.aut.ac.nz/study/study-options/engineering-computer-and-mathematical-sciences/courses/bachelor-of-computer-and-information-sciences/networks-and-security-major'
+    elif major == 'Computer Science':
+        return init_reply + major + ':\nhttps://autdev.aut.ac.nz/study/study-options/engineering-computer-and-mathematical-sciences/courses/bachelor-of-computer-and-information-sciences/computer-science-major'
     elif major is None:
         return 'What do you want to study?'
     else:
