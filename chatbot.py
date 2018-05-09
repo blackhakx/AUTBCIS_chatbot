@@ -10,6 +10,26 @@ from wit import Wit
 access_token = "KHZTPELNAGRKEYLCM3RLQSFLXBNXG6ZP"
 
 
+pre_req = {
+    'Programming 2': 'Programming 1',
+    'Data & Process Modelling': 'Programming 1',
+    'Logical Database Design': 'Programming 1 or Programming for Engineering  Applications',
+    'Programming Design & Construction': 'Programming 2',
+    'Software Development Practice': 'Programming Design & Construction or Data Structures & Algorithms',
+    'Operating Systems': 'Foundations of IT Infrastructure and choose between Programming 2 or Data Structures & Algorithms',
+    'Physical Database Design': 'Programming 2 and Logical Database Design',
+    'Software Engineering': 'Program Design & Construction or Data Structures & Algorithms',
+    'Web Development':  'Program Design & Construction',
+    'Distributed & Mobile Systems': 'Algorithm Design & Analysis',
+    'Research & Development Project': ''
+}
+
+co_req = {
+    'Programming Design & Construction': 'IT Project Management',
+    'Software Development Practice': 'Data & Process Modelling'
+}
+
+
 def first_entity_value(entities, entity):
     if entity not in entities:
         return None
@@ -39,38 +59,66 @@ def major_papers(major):
         return 'AUT do not offer that programme'
 
 
+def get_co_req(paper):
+    coreq = co_req.get(paper)
+    if coreq is None:
+        return 'There is no co-requisite for ' + paper
+    else:
+        return coreq
+
+
+def get_co_req_pre_req(paper):
+    coreq = co_req.get(paper)
+    #print(coreq)
+    prereq = pre_req.get(paper)
+    #print(prereq)
+    if prereq is None and coreq is None:
+        return 'There is no pre-requisite and co-requisite for ' + paper
+    elif coreq is not None and prereq is None:
+        return 'co-requisite: ' + coreq + '\npre-requisite: none'
+    elif coreq is None and prereq is not None:
+        return 'co-requisite: none \npre-requisite: ' + prereq
+    else:
+        return 'co-requisite: ' + coreq + '\npre-requisite: ' + prereq
+
+
+def get_pre_req(paper):
+    prereq = pre_req.get(paper)
+    if prereq is None:
+        return 'There is no pre-requisite for ' + paper
+    else:
+        return prereq
+
+
 def user_intent(entities, intent):
     # know what user intent
     if intent == 'study':
-        major = category = first_entity_value(entities, 'major')
+        major = first_entity_value(entities, 'major')
         return major_papers(major)
-
-
-"""
-def handle_message(response):
-    entities = response['entities']
-    #major = first_entity_value(entities, 'major')
-    greetings = first_entity_value(entities, 'greetings')
-    intent = first_entity_value(entities, 'intent')
-    if major:
-        return major_papers(major)
-    elif greetings:
-        return 'Hello, how can I help you?'
-    else:
-        return 'I do not understand you'
-"""
+    elif intent == 'co-req':
+        paper = first_entity_value(entities, 'paper')
+        return get_co_req(paper)
+    elif intent == 'pre-req':
+        paper = first_entity_value(entities, 'paper')
+        return get_pre_req(paper)
+    elif intent == 'pre-req_co-req':
+        paper = first_entity_value(entities, 'paper')
+        return get_co_req_pre_req(paper)
 
 
 def handle_message(response):
     entities = response['entities']
     intent = first_entity_value(entities, 'intent')
     greetings = first_entity_value(entities, 'greetings')
+    bye = first_entity_value(entities, 'bye')
     print(intent, entities)
     # Check if user intent is defined or wit.ai made entities
     if intent:
         return user_intent(entities, intent)
     elif greetings:
         return 'Hello, how can I help you?'
+    elif bye:
+        exit(1)
     else:
         return 'I do not understand you.'
 
