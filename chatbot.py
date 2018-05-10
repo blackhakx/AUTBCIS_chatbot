@@ -158,10 +158,21 @@ def city_papers(city_campus):
 
 
 def south_papers(south_campus):
-    init_reply = 'The papers available for city campus are: \n'
+    init_reply = 'The papers available for south campus are: \n'
 
-    year1_sem1 = 'Year 1, Semester 1: '
-    year1_sem1_papers = core_papers['COMM501'] + core_papers['COMP500'] + core_papers['']
+    year1_sem1_2 = 'Year 1, Semester 1 & 2: '
+    year1_sem1_2_papers = core_papers['COMM501'] + core_papers['COMP500'] + core_papers['COMP501'] + core_papers['COMP502'] + core_papers['INFS500'] + core_papers['COMP503'] + core_papers['ENEL504'] + core_papers['STAT500'] + core_papers['MATH502'] + core_papers['MATH500']
+    year1 = year1_sem1_2 + year1_sem1_2_papers
+
+    year2_sem1_2 = '\nYear 2, Semester 1 & 2: '
+    year2_sem1_2_papers = core_papers['INFS600'] + core_papers['INFS601'] + core_papers['COMP600'] + softdev_papers['COMP603'] + softdev_papers['COMP602'] + softdev_papers['COMP604'] + softdev_papers['INFS602']
+    year2 = year2_sem1_2 + year2_sem1_2_papers
+
+    year3_sem1_2 = '\nYear 3, Semester 1 & 2: '
+    year3_sem1_2_papers = softdev_papers['ENSE701'] + softdev_papers['COMP719'] + softdev_papers['COMP721'] + core_papers['COMP702'] + core_papers['COMP703']
+    year3 = year3_sem1_2 + year3_sem1_2_papers
+
+    return init_reply + year1 + year2 + year3
 
 
 def user_intent(entities, intent):
@@ -184,6 +195,9 @@ def user_intent(entities, intent):
     elif intent == 'city_campus':
         city_campus = first_entity_value(entities, 'city_campus')
         return city_papers(city_campus)
+    elif intent == 'south_campus':
+        south_campus = first_entity_value(entities, 'south_campus')
+        return south_papers(south_campus)
 
 
 def handle_message(response):
