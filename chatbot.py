@@ -214,7 +214,6 @@ def handle_message(response):
     intent = first_entity_value(entities, 'intent')
     greetings = first_entity_value(entities, 'greetings')
     bye = first_entity_value(entities, 'bye')
-    print(intent, entities)
     # Check if user intent is defined or wit.ai made entities
     if intent:
         return user_intent(entities, intent)
