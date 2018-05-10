@@ -59,13 +59,16 @@ def major_papers(major):
         return 'AUT do not offer that programme'
 
 
+def get_double_major(double_major):
+    return 'For double majors, please email: cadvisor@aut.ac.nz'
+
+
 def get_co_req(paper):
     coreq = co_req.get(paper)
     if coreq is None:
         return 'There is no co-requisite for ' + paper
     else:
         return coreq
-
 
 def get_co_req_pre_req(paper):
     coreq = co_req.get(paper)
@@ -104,6 +107,9 @@ def user_intent(entities, intent):
     elif intent == 'pre-req_co-req':
         paper = first_entity_value(entities, 'paper')
         return get_co_req_pre_req(paper)
+    elif intent == 'double_major':
+        double_major = first_entity_value(entities, 'double_major')
+        return get_double_major(double_major)
 
 
 def handle_message(response):
