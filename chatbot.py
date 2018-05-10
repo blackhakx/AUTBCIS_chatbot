@@ -13,7 +13,7 @@ access_token = "KHZTPELNAGRKEYLCM3RLQSFLXBNXG6ZP"
 pre_req = {
     'Programming 2': 'Programming 1',
     'Data & Process Modelling': 'Programming 1',
-    'Logical Database Design': 'Programming 1 or Programming for Engineering  Applications',
+    'Logical Database Design': 'Programming 1 or Programming for Engineering Applications',
     'Programming Design & Construction': 'Programming 2',
     'Software Development Practice': 'Programming Design & Construction or Data Structures & Algorithms',
     'Operating Systems': 'Foundations of IT Infrastructure and choose between Programming 2 or Data Structures & Algorithms',
@@ -21,7 +21,7 @@ pre_req = {
     'Software Engineering': 'Program Design & Construction or Data Structures & Algorithms',
     'Web Development':  'Program Design & Construction',
     'Distributed & Mobile Systems': 'Algorithm Design & Analysis',
-    'Research & Development Project': ''
+    'Research & Development Project': 'IT Project Management & Software Development Practice'
 }
 
 co_req = {
@@ -112,9 +112,7 @@ def get_co_req(paper):
 
 def get_co_req_pre_req(paper):
     coreq = co_req.get(paper)
-    #print(coreq)
     prereq = pre_req.get(paper)
-    #print(prereq)
     if prereq is None and coreq is None:
         return 'There is no pre-requisite and co-requisite for ' + paper
     elif coreq is not None and prereq is None:
@@ -173,6 +171,14 @@ def south_papers(south_campus):
     year3 = year3_sem1_2 + year3_sem1_2_papers
 
     return init_reply + year1 + year2 + year3
+  
+  
+def eligible(paper):
+    prereq = pre_req.get(paper)
+    if prereq is not None:
+        return 'If you have taken ' + prereq + ' then you can take ' + paper
+    else:
+        return 'You are able to take ' + paper
 
 
 def user_intent(entities, intent):
@@ -198,6 +204,9 @@ def user_intent(entities, intent):
     elif intent == 'south_campus':
         south_campus = first_entity_value(entities, 'south_campus')
         return south_papers(south_campus)
+    elif intent == 'eligibility':
+        paper = first_entity_value(entities, 'paper')
+        return eligible(paper)
 
 
 def handle_message(response):
