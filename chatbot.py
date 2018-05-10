@@ -29,6 +29,35 @@ co_req = {
     'Software Development Practice': 'Data & Process Modelling'
 }
 
+core_papers = {
+    'COMM501' : 'Applied Communication, ',
+    'COMP500' : 'Programming 1, ',
+    'COMP501' : 'Computing Technology in Society, ',
+    'COMP502' : 'Foundations of IT, ',
+    'INFS500' : 'Enterprise Systems, ',
+    'COMP503' : 'Programming 2, ',
+    'ENEL504' : 'Computer Network Principles (CCNA1), ',
+    'STAT500' : 'Applied Statistics, ',
+    'MATH501' : 'Differential & Integral Calculus, ',
+    'MATH502' : 'Algebra & Discrete Mathematics, ',
+    'MATH500' : 'Mathematical Concepts, ',
+    'INFS600' : 'Data & Process Modelling, ',
+    'INFS601' : 'Logical Database Design, ',
+    'COMP600' : 'IT Project Management, ',
+    'COMP702' : 'Research and Development Project Part 1, ',
+    'COMP703' : 'Research and Development Project Part 2, '
+}
+
+softdev_papers = {
+    'COMP603' : 'Program Design & Construction, ',
+    'COMP602' : 'Software Development Practice, ',
+    'COMP604' : 'Operating Systems, ',
+    'INFS602' : 'Physical Database Design, ',
+    'ENSE701' : 'Software Engineering, ',
+    'COMP719' : 'Applied Human Computer Interaction, ',
+    'COMP721' : 'Web Development, ',
+    'COMP713' : 'Distributed & Mobile Systems, '
+}
 
 def first_entity_value(entities, entity):
     if entity not in entities:
@@ -104,8 +133,39 @@ def get_pre_req(paper):
         return prereq
 
 
+def city_papers(city_campus):
+    init_reply = 'The papers available for city campus are: \n'
+
+    year1_sem1_city = 'Year 1, Semester 1: '
+    year1_sem1_city_papers = core_papers['COMM501'] + core_papers['COMP500'] + core_papers['COMP501'] + core_papers['COMP502'] + core_papers['INFS500'] + core_papers['COMP503'] + core_papers['ENEL504'] + core_papers['STAT500'] + core_papers['MATH502'] + core_papers['MATH500']
+    year1_sem2_city = '\nYear 1, Semester 2: '
+    year1_sem2_city_papers = core_papers['COMM501'] + core_papers['COMP500'] + core_papers['COMP501'] + core_papers['COMP502'] + core_papers['INFS500'] + core_papers['COMP503'] + core_papers['ENEL504'] + core_papers['STAT500'] + core_papers['MATH501'] +core_papers['MATH502'] + core_papers['MATH500']
+    year1 = year1_sem1_city + year1_sem1_city_papers + year1_sem2_city + year1_sem2_city_papers
+
+    year2_sem1_city = '\nYear 2, Semester 1: '
+    year2_sem1_city_papers = core_papers['INFS600'] + core_papers['INFS601'] + core_papers['COMP600'] + softdev_papers['COMP603'] + softdev_papers['COMP602']
+    year2_sem2_city = '\nYear 2, Semester 2: '
+    year2_sem2_city_papers = core_papers['INFS600'] + core_papers['INFS601'] + core_papers['COMP600'] + softdev_papers['COMP603'] + softdev_papers['COMP602'] + softdev_papers['COMP604'] + softdev_papers['INFS602']
+    year2 = year2_sem1_city + year2_sem1_city_papers + year2_sem2_city + year2_sem2_city_papers
+
+    year3_sem1_city = '\nYear 3, Semester 1: '
+    year3_sem1_city_papers = softdev_papers['ENSE701'] + softdev_papers['COMP719'] + softdev_papers['COMP721'] + softdev_papers['COMP713'] + core_papers['COMP702'] + core_papers['COMP703']
+    year3_sem2_city = '\nYear 3, Semester 2: '
+    year3_sem2_city_papers = softdev_papers['ENSE701'] + softdev_papers['COMP719'] + softdev_papers['COMP721'] + softdev_papers['COMP713'] + core_papers['COMP702'] + core_papers['COMP703']
+    year3 = year3_sem1_city + year3_sem1_city_papers + year3_sem2_city + year3_sem2_city_papers
+
+    return init_reply + year1 + year2 + year3
+
+
+def south_papers(south_campus):
+    init_reply = 'The papers available for city campus are: \n'
+
+    year1_sem1 = 'Year 1, Semester 1: '
+    year1_sem1_papers = core_papers['COMM501'] + core_papers['COMP500'] + core_papers['']
+
+
 def user_intent(entities, intent):
-    # know what user intent
+    # know what user intent4
     if intent == 'study':
         major = first_entity_value(entities, 'major')
         return major_papers(major)
@@ -121,6 +181,9 @@ def user_intent(entities, intent):
     elif intent == 'double_major':
         double_major = first_entity_value(entities, 'double_major')
         return get_double_major(double_major)
+    elif intent == 'city_campus':
+        city_campus = first_entity_value(entities, 'city_campus')
+        return city_papers(city_campus)
 
 
 def handle_message(response):
