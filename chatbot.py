@@ -9,6 +9,18 @@ from wit import Wit
 
 access_token = "KHZTPELNAGRKEYLCM3RLQSFLXBNXG6ZP"
 
+pre_req = {
+    'Programming 2': 'Programming 1'
+}
+
+math_req = {
+    'Analytics': 'STAT500 Applied Statistics' or 'MATH501 Differential & Integral Calculus',
+    'Computational Intelligence': 'STAT500 Applied Statistics',
+    'Computer Science': 'MATH502 Algebra & Discrete Mathematics',
+    'IT Service Sciences': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics',
+    'Network & Security': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics',
+    'Software Development': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics'
+}
 
 def first_entity_value(entities, entity):
     if entity not in entities:
@@ -36,55 +48,33 @@ def major_papers(major):
     else:
         return 'AUT do not offer that programme'
 
+
 def math_paper(major):
-    init_reply = 'Cool! Here are the Mathematics papers for '
-    if major == 'Analytics':
-        return init_reply + major + ', you need to take both STAT500 Applied Statistics and MATH501 Differential & Integral Calculus'
-    elif major == 'Computational Intelligence':
-        return init_reply + major + 'STAT500 Applied Statistics'
-    elif major == 'Computer Science':
-        return init_reply + major + 'MATH502 Algebra & Discrete Mathematics'
-    elif major == 'IT Service Sciences' or 'Network & Security' or 'Software Development':
-        return init_reply + major + 'Choose one from: TAT500 Applied Statistics, MATH500 Mathematical Concepts, MATH501 Differential & Integral Calculus or MATH502 Algebra & Discrete Mathematics'
-    elif major is None:
-        return 'What is your major?'
-    else:
-        return 'AUT does not offer that program'
+    mq = math_req.get(major)
+    return mq
+
 
 def programming_paper(paper):
-    if paper == 'Programming 2':
-        return 'Programming 1 is the previous paper required. Have you done Programming 1?'
-    elif paper == 'Programming 1':
+    pr = pre_req.get(paper)
+    if pr is not None:
+        return 'Programming 1 is the previous paper required.'
+    else:
         return 'Sure you can start with Programming 2 next semester.'
 
 
 def user_intent(entities, intent):
     # know what user intent
     if intent == 'study':
-        major = category = first_entity_value(entities, 'major')
+        major = first_entity_value(entities, 'major')
         return major_papers(major)
     if intent == 'get_math':
-        major = category = first_entity_value(entities, 'major')
+        major = first_entity_value(entities, 'major')
         return math_paper(major)
-    if intent == 'pre_require':
-        paper = category = first_entity_value(entities, 'paper')
+    if intent == 'pre_req':
+        paper = first_entity_value(entities, 'paper')
         return programming_paper(paper)
     if intent == 'elective_paper':
         return 'Single major students need to choose up to 5 elective papers (75 points) at any level (5,6,7) to make up the 360 points required for the degree. Double major students does not have to take elective papers.'
-
-"""
-def handle_message(response):
-    entities = response['entities']
-    #major = first_entity_value(entities, 'major')
-    greetings = first_entity_value(entities, 'greetings')
-    intent = first_entity_value(entities, 'intent')
-    if major:
-        return major_papers(major)
-    elif greetings:
-        return 'Hello, how can I help you?'
-    else:
-        return 'I do not understand you'
-"""
 
 
 def handle_message(response):
