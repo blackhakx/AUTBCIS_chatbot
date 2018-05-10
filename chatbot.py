@@ -60,7 +60,17 @@ def major_papers(major):
 
 
 def get_double_major(double_major):
-    return 'For double majors, please email: cadvisor@aut.ac.nz'
+    user_input = input('Which year are you in? ')
+    email = 'To seek for advice on double major, please email: cadvisor@aut.ac.nz'
+
+    # Check years 1, 2 and 3
+    if user_input == 'one' or user_input == "1":
+        return email
+    elif user_input == 'two' or user_input == "2":
+        return email
+    else:
+        return 'I am sorry, you have to either be in year 1 or year 2 to seek for advice in doing a double major'
+
 
 
 def get_co_req(paper):
@@ -69,6 +79,7 @@ def get_co_req(paper):
         return 'There is no co-requisite for ' + paper
     else:
         return coreq
+
 
 def get_co_req_pre_req(paper):
     coreq = co_req.get(paper)
