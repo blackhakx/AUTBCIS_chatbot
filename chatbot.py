@@ -13,9 +13,9 @@ math_req = {
     'Analytics': 'STAT500 Applied Statistics' or 'MATH501 Differential & Integral Calculus',
     'Computational Intelligence': 'STAT500 Applied Statistics',
     'Computer Science': 'MATH502 Algebra & Discrete Mathematics',
-    'IT Service Sciences': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics',
-    'Network & Security': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics',
-    'Software Development': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics'
+    'IT Service Sciences': 'STAT500 Applied Statistics or MATH500 Mathematical Concepts or MATH501 Differential & Integral Calculus or MATH502 Algebra & Discrete Mathematics',
+    'Network & Security': 'STAT500 Applied Statistics or MATH500 Mathematical Concepts or MATH501 Differential & Integral Calculus or MATH502 Algebra & Discrete Mathematics',
+    'Software Development': 'STAT500 Applied Statistics or MATH500 Mathematical Concepts or MATH501 Differential & Integral Calculus or MATH502 Algebra & Discrete Mathematics'
 }
 
 pre_req = {
@@ -98,10 +98,12 @@ def major_papers(major):
 
 def math_paper(major):
     mq = math_req.get(major)
+    if major is None:
+        return math_req['Software Development']
     return mq
 
       
- def get_double_major(double_major):
+def get_double_major(double_major):
     user_input = input('Which year are you in? ')
     email = 'To seek for advice on double major, please email: cadvisor@aut.ac.nz'
 
