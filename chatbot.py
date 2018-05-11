@@ -9,6 +9,14 @@ from wit import Wit
 
 access_token = "KHZTPELNAGRKEYLCM3RLQSFLXBNXG6ZP"
 
+math_req = {
+    'Analytics': 'STAT500 Applied Statistics' or 'MATH501 Differential & Integral Calculus',
+    'Computational Intelligence': 'STAT500 Applied Statistics',
+    'Computer Science': 'MATH502 Algebra & Discrete Mathematics',
+    'IT Service Sciences': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics',
+    'Network & Security': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics',
+    'Software Development': 'STAT500 Applied Statistics,' or 'MATH500 Mathematical Concepts,' or 'MATH501 Differential & Integral Calculus' or 'MATH502 Algebra & Discrete Mathematics'
+}
 
 pre_req = {
     'Programming 2': 'Programming 1',
@@ -30,33 +38,33 @@ co_req = {
 }
 
 core_papers = {
-    'COMM501' : 'Applied Communication, ',
-    'COMP500' : 'Programming 1, ',
-    'COMP501' : 'Computing Technology in Society, ',
-    'COMP502' : 'Foundations of IT, ',
-    'INFS500' : 'Enterprise Systems, ',
-    'COMP503' : 'Programming 2, ',
-    'ENEL504' : 'Computer Network Principles (CCNA1), ',
-    'STAT500' : 'Applied Statistics, ',
-    'MATH501' : 'Differential & Integral Calculus, ',
-    'MATH502' : 'Algebra & Discrete Mathematics, ',
-    'MATH500' : 'Mathematical Concepts, ',
-    'INFS600' : 'Data & Process Modelling, ',
-    'INFS601' : 'Logical Database Design, ',
-    'COMP600' : 'IT Project Management, ',
-    'COMP702' : 'Research and Development Project Part 1, ',
-    'COMP703' : 'Research and Development Project Part 2, '
+    'COMM501': 'Applied Communication, ',
+    'COMP500': 'Programming 1, ',
+    'COMP501': 'Computing Technology in Society, ',
+    'COMP502': 'Foundations of IT, ',
+    'INFS500': 'Enterprise Systems, ',
+    'COMP503': 'Programming 2, ',
+    'ENEL504': 'Computer Network Principles (CCNA1), ',
+    'STAT500': 'Applied Statistics, ',
+    'MATH501': 'Differential & Integral Calculus, ',
+    'MATH502': 'Algebra & Discrete Mathematics, ',
+    'MATH500': 'Mathematical Concepts, ',
+    'INFS600': 'Data & Process Modelling, ',
+    'INFS601': 'Logical Database Design, ',
+    'COMP600': 'IT Project Management, ',
+    'COMP702': 'Research and Development Project Part 1, ',
+    'COMP703': 'Research and Development Project Part 2, '
 }
 
 softdev_papers = {
-    'COMP603' : 'Program Design & Construction, ',
-    'COMP602' : 'Software Development Practice, ',
-    'COMP604' : 'Operating Systems, ',
-    'INFS602' : 'Physical Database Design, ',
-    'ENSE701' : 'Software Engineering, ',
-    'COMP719' : 'Applied Human Computer Interaction, ',
-    'COMP721' : 'Web Development, ',
-    'COMP713' : 'Distributed & Mobile Systems, '
+    'COMP603': 'Program Design & Construction, ',
+    'COMP602': 'Software Development Practice, ',
+    'COMP604': 'Operating Systems, ',
+    'INFS602': 'Physical Database Design, ',
+    'ENSE701': 'Software Engineering, ',
+    'COMP719': 'Applied Human Computer Interaction, ',
+    'COMP721': 'Web Development, ',
+    'COMP713': 'Distributed & Mobile Systems, '
 }
 
 def first_entity_value(entities, entity):
@@ -88,7 +96,12 @@ def major_papers(major):
         return 'AUT do not offer that programme'
 
 
-def get_double_major(double_major):
+def math_paper(major):
+    mq = math_req.get(major)
+    return mq
+
+      
+ def get_double_major(double_major):
     user_input = input('Which year are you in? ')
     email = 'To seek for advice on double major, please email: cadvisor@aut.ac.nz'
 
@@ -181,8 +194,9 @@ def eligible(paper):
         return 'You are able to take ' + paper
 
 
+
 def user_intent(entities, intent):
-    # know what user intent4
+    # know what user intent
     if intent == 'study':
         major = first_entity_value(entities, 'major')
         return major_papers(major)
@@ -207,8 +221,13 @@ def user_intent(entities, intent):
     elif intent == 'eligibility':
         paper = first_entity_value(entities, 'paper')
         return eligible(paper)
+    elif intent == 'get_math':
+        major = first_entity_value(entities, 'major')
+        return math_paper(major)
+    elif intent == 'elective_paper':
+        return 'Single major students need to choose up to 5 elective papers (75 points) at any level (5,6,7) to make up the 360 points required for the degree. Double major students does not have to take elective papers.'
 
-
+      
 def handle_message(response):
     entities = response['entities']
     intent = first_entity_value(entities, 'intent')
