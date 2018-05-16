@@ -67,6 +67,7 @@ softdev_papers = {
     'COMP713': 'Distributed & Mobile Systems, '
 }
 
+
 def first_entity_value(entities, entity):
     if entity not in entities:
         return None
@@ -114,7 +115,6 @@ def get_double_major(double_major):
         return email
     else:
         return 'I am sorry, you have to either be in year 1 or year 2 to seek for advice in doing a double major'
-
 
 
 def get_co_req(paper):
@@ -225,11 +225,12 @@ def user_intent(entities, intent):
         return eligible(paper)
     elif intent == 'get_math':
         major = first_entity_value(entities, 'major')
+
         return math_paper(major)
     elif intent == 'elective_paper':
         return 'Single major students need to choose up to 5 elective papers (75 points) at any level (5,6,7) to make up the 360 points required for the degree. Double major students does not have to take elective papers.'
 
-      
+"""      
 def handle_message(response):
     entities = response['entities']
     intent = first_entity_value(entities, 'intent')
@@ -244,7 +245,7 @@ def handle_message(response):
         exit(1)
     else:
         return 'I do not understand you.'
+"""
 
-
-client = Wit(access_token=access_token)
-client.interactive(handle_message=handle_message)
+#client = Wit(access_token=access_token)
+#client.interactive(handle_message=handle_message)
