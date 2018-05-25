@@ -38,7 +38,12 @@ var coReq = '{"ProgrammingDesignConstruction": "IT Project Management",' +
 
 var coReqObj = JSON.parse(coReq);
 
-var majorPapers = '{"SoftwareDevelopment": "COMP603, COMP602, COMP604, INFS602, ENSE701, COMP719, COMP721, COMP713"}';
+var majorPapers = '{"SoftwareDevelopment": "COMP603, COMP602, COMP604, INFS602, ENSE701, COMP719, COMP721, COMP713",'+
+'"ComputerScience": "COMP610, COMP611, COMP604, COMP613, COMP711, COMP712, COMP717, COMP713",'+
+    '"ITServiceScience": "COMP601, INFS603, COMP609, COMP607, INFS701, INFS702, COMP718, INFS703",'+
+    '"NetworksSecurity": "ENEL611, COMP609, COMP604, INFS602, COMP714, COMP715, COMP718, COMP713", '+
+    '"ComputationalIntelligence": "COMP606, STAT601, COMP610, INFS602, COMP717, COMP723, COMP700, COMP701", '+
+    '"Analytics": "STAT600, STAT601, STAT603, STAT702, STAT700, COMP723, STAT701" }';
 
 var majorPapersObj = JSON.parse(majorPapers);
 
