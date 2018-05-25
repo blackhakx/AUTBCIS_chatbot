@@ -63,16 +63,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   // // below to get this function to be run when a Dialogflow intent is matched
   
    function getstudy(agent) {
-       //var parameters = request.body.queryResult.parameters.major;
-       /*
-       var reply = "study";
-       var major = "SoftwareDevelopment";
-       var majorPapers = majorPapersObj[major];
-       console.log("study");
-              //console.log("This is the reply " + reply);
-       agent.add("this is trial respons " + reply);
-       agent.add(majorPapers)
-       */
        const requestedMajor = agent.parameters.major;
        console.log("entity:: " + requestedMajor);
        if (majorPapersObj.hasOwnProperty(requestedMajor)){
@@ -101,6 +91,20 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
        }
    }
    
+   function getCoreq(agent){
+       const requestedPaper = agent.parameters.paper;
+       console.log("entity:: " + requestedPaper);
+       if (coReqObj.hasOwnProperty(requestedPaper)){
+           var paperCoreq = coReqObj[requestedPaper];
+           console.log("paper:: " + paperCoreq);
+           var paperCoreqs = JSON.stringify(paperCoreq);
+           console.log(paperCoreqs);
+       agent.add(paperCoreqs);}
+       else{
+           agent.add("None");
+       }
+   }
+   
    function getMath(agent){
        const requestedMajor = agent.parameters.major;
        console.log("entity:: " + requestedMajor);
@@ -108,6 +112,17 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
        var mathPapers = JSON.stringify(mathPaper);
        agent.add("Math papers that you can take are: ");
        agent.add(mathPapers);
+   }
+   
+   function getEligibility(agent){
+       const requestedPaper = agent.parameters.paper;
+       console.log("entity:: " + requestedPaper);
+       if (preReqObj.hasOwnProperty(requestedPaper)){
+           var paperReq = preReqObj[requestedPaper];
+           console.log("paper:: " + paperReq);
+           var paperReqs = JSON.stringify(paperReq);
+           console.log(paperReqs);
+       }
    }
 
   // Run the proper function handler based on the matched Dialogflow intent name
@@ -117,6 +132,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   intentMap.set('study', getstudy);
   intentMap.set('pre-req', getPrereq);
   intentMap.set('math', getMath);
+  intentMap.set('co-req', getCoreq);
+  intentMap.set('eligibility', getEligibility);
   // intentMap.set('your intent name here', googleAssistantHandler);
   agent.handleRequest(intentMap);
 });
